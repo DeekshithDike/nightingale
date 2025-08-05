@@ -1,3 +1,4 @@
+# Rename this file to README.md to be the main project README
 # Nightingale API - Docker Setup Guide
 
 This project is a Laravel-based API for appointment bookings, user authentication, and scheduling, designed to run easily with Docker.
@@ -72,7 +73,14 @@ docker-compose exec app php artisan test
 
 ## Additional Notes
 - All setup, migrations, and seeding are handled by Docker for a seamless experience.
-- For custom seeders or additional setup, modify the `database/seeders` directory and re-run migrations/seeds as needed.
+- The project includes the following seeders by default:
+  - `DatabaseSeeder.php` (main entry point)
+  - `AppointmentBookingSeeder.php` (populates appointment bookings)
+  - `AvailableSlotSeeder.php` (populates available slots)
+- You can customize or add your own seeders in the `database/seeders` directory. To run a specific seeder manually:
+  ```bash
+  docker-compose exec app php artisan db:seed --class=AppointmentBookingSeeder
+  ```
 - For more details, see the API-specific README files (e.g., `LOGIN_API_README.md`, `REGISTRATION_API_README.md`).
 
 ---
