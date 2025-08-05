@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nightingale_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    networks:
+      - laravel_net
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: nightingale_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: nightingale_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: nightingale_user
+      MYSQL_PASSWORD: nightingale_pass
+    ports:
+      - "3307:3306"
+    networks:
+      - laravel_net
+    volumes:
+      - db_data:/var/lib/mysql
+
+  nginx:
+    image: nginx:alpine
+    container_name: nightingale_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"   # Host 8000 -> Container 80
+    volumes:
+      - .:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - laravel_net
+
+networks:
+  laravel_net:
+
+volumes:
+  db_data:
