@@ -92,7 +92,7 @@ You can add or customize seeders in `database/seeders`.
 
 ## 📄 Additional Notes
 - All setup, migrations, and seeding are handled by Docker for a seamless experience.
-- For customizations, see the API-specific README files (e.g., `LOGIN_API_README.md`, `REGISTRATION_API_README.md`).
+- For customizations, see the relevant sections in this README.
 
 ---
 
